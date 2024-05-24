@@ -1,0 +1,51 @@
+CREATE DATABASE crud;
+
+USE crud;
+
+CREATE TABLE Departamentos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_departamento VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE Generos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE Empleados (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombres VARCHAR(50) NOT NULL,
+    apellidos VARCHAR(50) NOT NULL,
+    fecha_ingreso DATE NOT NULL,
+    comentarios TEXT,
+    genero_id INT,
+    departamento_id INT,
+    salario INT,
+    FOREIGN KEY (genero_id) REFERENCES Generos(id),
+    FOREIGN KEY (departamento_id) REFERENCES Departamentos(id)
+);
+
+CREATE TABLE Gastos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ano INT NOT NULL,
+    mes INT NOT NULL,
+    gastos DECIMAL(10, 2) NOT NULL,
+    departamento_id INT,
+    FOREIGN KEY (departamento_id) REFERENCES Departamentos(id)
+);
+
+-- Insertar datos iniciales en la tabla Generos
+INSERT INTO Generos (nombre) VALUES 
+('Masculino'), 
+('Femenino'), 
+('Otro')
+ON DUPLICATE KEY UPDATE id=id;
+
+-- Insertar datos iniciales en la tabla Departamentos
+INSERT INTO Departamentos (nombre_departamento) VALUES 
+('TI'), 
+('Servicio al Cliente'), 
+('Administración'),
+('RRHH'),
+('Ventas')
+ON DUPLICATE KEY UPDATE id=id;
